@@ -1,0 +1,5 @@
+empty = "Something is missing chech";
+learn => mongodb;
+learn => cloudinary;
+learn => cookie
+learn => multer
