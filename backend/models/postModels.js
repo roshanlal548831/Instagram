@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,ref:"User",
         required: true
     },
-    like:[{
+    likes:[{
         type:mongoose.Schema.Types.ObjectId,ref:"User",
     }],
     
@@ -23,5 +23,4 @@ const postSchema = new mongoose.Schema({
     }],
     
 })
-const Post =  mongoose.model("post",postSchema)
-export default Post
+export const   Post =  mongoose.model("Post",postSchema)
