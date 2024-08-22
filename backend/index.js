@@ -7,6 +7,8 @@ import cors from 'cors';
 import cookieParser from "cookie-parser";
 import { connectDB } from './utils/db.js';
 import router from './router/userRoute.js';
+import postRoute from "./router/postRouter.js"
+import messageRoute from "./router/messageRoute.js"
 
 
 const app = express();
@@ -27,6 +29,8 @@ app.get("/",(req,res)=>{
     res.send("hello world")
 })
 app.use("/api/v1/user",router)
+app.use("/api/v1/post",postRoute)
+app.use("/api/v1/message",messageRoute)
 
 app.listen(port,()=>{
     connectDB()

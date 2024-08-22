@@ -3,6 +3,8 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken"
 import getDataUri from "../utils/dataUri.js";
 import cloudinary from "../utils/cloudinary.js";
+import { populate } from "dotenv";
+import { Post } from "../models/postModels.js";
 
 export const register = async (req,res) => {
     try {
@@ -57,6 +59,17 @@ export const login = async(req,res) => {
         const token = await jwt.sign({userId:user._id},process.env.SECRET_KEY,{expiresIn:"1d"});
        
         if(hashpassword){
+            // populate each post if in the post array;
+            const populatedPost = await Promise.all(
+                user.posts.map(async (postId) => {
+                    const post = await Post.findById(postId);
+                    if(post.author.equals(user._id)){
+                        return post
+                        
+                    }
+                    return null
+                })
+            )
           const users = {
              _id:user.id,
              username:user.username,
