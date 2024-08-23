@@ -46,6 +46,8 @@ export const register = async (req,res) => {
 export const login = async(req,res) => {
     try {
         const {username,password} = await req.body;
+        const fdata = await req.body
+        console.log(fdata)
         const user = await User.findOne({username:username})
     
         if(!user){
@@ -81,7 +83,8 @@ export const login = async(req,res) => {
             }
            return res.cookie("token",token,{httpOnly:true,sameSite:"strict",maxAge:1*24*60*1000}).json({
             message: `welcome back ${user.username}`,
-            users
+            users,
+            success:true
            });
           
         }else{

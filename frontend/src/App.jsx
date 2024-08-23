@@ -1,18 +1,56 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { Button } from './components/ui/button'
-
+// import './App.css'
+import Signup from './components/Signup'
+import { ToastContainer } from 'react-toastify'
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";import Login from './components/Login'
+import Home from './components/Home'
+import Mainlayout from './components/Mainlayout'
+import Profile from './components/Profile';
 function App() {
-  const [count, setCount] = useState(0)
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element:<Mainlayout/>,
+      children:[
+        {
+          path: "/profile",
+          element:<Profile/>
+        },
+        {
+          path: "/home",
+          element:<Home/>
+        },
+      ]
+    },
+    {
+      path: "/login",
+      element:<Login/>,
+    },
+    {
+      path: "/signup",
+      element:<Signup/>,
+    },
+  ]);
+  
 
   return (
     <>
-    <div>
-     <Button className="text-center">hello world</Button>
-
-    </div>
+    <ToastContainer
+     position="top-right"
+     autoClose={5000}
+     hideProgressBar={false}
+     newestOnTop={false}
+     closeOnClick
+     rtl={false}
+     pauseOnFocusLoss
+     draggable
+     pauseOnHover
+     theme="dark"/>
+      <RouterProvider router={router} />
+<ToastContainer/>
     </>
   )
 }
