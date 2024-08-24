@@ -3,7 +3,6 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken"
 import getDataUri from "../utils/dataUri.js";
 import cloudinary from "../utils/cloudinary.js";
-import { populate } from "dotenv";
 import { Post } from "../models/postModels.js";
 
 export const register = async (req,res) => {
@@ -59,7 +58,6 @@ export const login = async(req,res) => {
     
         const hashpassword = await bcryptjs.compare(password,user.password);
         const token = await jwt.sign({userId:user._id},process.env.SECRET_KEY,{expiresIn:"1d"});
-       
         if(hashpassword){
             // populate each post if in the post array;
             const populatedPost = await Promise.all(
@@ -79,12 +77,13 @@ export const login = async(req,res) => {
              profilePicture:user.profilePicture,
              bio:user.bio,
              following:user.following,
-             posts:user.posts
+             posts:populatedPost
             }
-           return res.cookie("token",token,{httpOnly:true,sameSite:"strict",maxAge:1*24*60*1000}).json({
+           return await res.cookie("token",token,{httpOnly:true,sameSite:"strict",maxAge:1*24*60*1000}).json({
             message: `welcome back ${user.username}`,
             users,
-            success:true
+            success:true,
+            token,
            });
           
         }else{
@@ -105,8 +104,8 @@ export const login = async(req,res) => {
 
 
 export const logout = async(_,res)=>{
-    try {
-        return res.cookie("token","",{maxAge:0}).json({
+    try {       
+        return await res.cookie("token","",{maxAge:0}).json({
             message:"Logged out successfully",
             success: true
         })
@@ -142,12 +141,7 @@ export const editProfile = async (req,res) => {
          cloudRespone = await cloudinary.uploader.upload(fileuri);
      
        };
-
-   
-      
-///               const user = await User.findById(userId);
-
-
+        //  const user = await User.findById(userId);
        if(!user){
         return res.status(404).json({
             message: "user not found.",
