@@ -11,12 +11,17 @@ const CommentDialog = ({open,setOpen}) => {
 
    const onchangetext = (e) =>{
   const textData = e.target.value
-      setText(textData)
+  if(textData.trim()){
+    setText(textData)
+   }else{
+    setText("")
+   }
+     
    }
 
    const handleSubmit = (e) =>{
      e.preventDefault();
-     console.log(text)
+    alert(text)
    }
   return (
     <Dialog open={open}>
@@ -68,7 +73,7 @@ const CommentDialog = ({open,setOpen}) => {
                {/* <div className='flex items-center gap-2'> */}
                 <form  onSubmit={handleSubmit} className='flex items-center gap-2'>
                    <input value={text}  onChange={onchangetext} type="text" placeholder='Add a comment...' className='w-full outline-none border border-gray-300 p-2 rounded' />
-                   <Button type="submit" variant="outline">Send</Button>
+                   <Button disabled={!text.trim()} type="submit" variant="outline">Send</Button>
                 </form>
                {/* </div> */}
             </div>

@@ -1,12 +1,15 @@
 
+import { setAuthUser } from '@/redux/AuthSlice';
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const login = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const[input,setInput] = useState({
        
         username:"",
@@ -32,13 +35,14 @@ const login = () => {
         }else{
             setLoading(true)
             const res = await axios.post("http://localhost:8000/api/v1/user/login",input)
-            console.log(res.data)
             if(res.data.success){
              toast.success(res.data.message)
              setInput({
                 username:"",
                 password:"",
             })
+            console.log("user data",res.data.users)
+            dispatch(setAuthUser(res.data.users))
             navigate("/")
             } 
         }

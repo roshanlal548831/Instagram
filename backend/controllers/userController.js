@@ -77,6 +77,7 @@ export const login = async(req,res) => {
              profilePicture:user.profilePicture,
              bio:user.bio,
              following:user.following,
+             followers:user.followers,
              posts:populatedPost
             }
            return await res.cookie("token",token,{httpOnly:true,sameSite:"strict",maxAge:1*24*60*1000}).json({

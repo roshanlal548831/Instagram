@@ -1,5 +1,6 @@
 empty = "Something is missing chech";
 learn => mongodb;
 learn => cloudinary;
-learn => cookie
-learn => multer
+learn => cookie;
+learn => multer;
+learn => Redux-Persist
