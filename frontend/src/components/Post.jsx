@@ -5,10 +5,12 @@ import { Button, } from './ui/button'
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import CommentDialog from './CommentDialog'
+import { useSelector } from 'react-redux'
 
-const Post = () => {
+const Post = ({post}) => {
   const[open,setOpen] = useState(false)
   const[text,setText] = useState("")
+  const {user} = useSelector((store) => store.auth)
   const changeEventHandler = (e) => {
        const inputText = e.target.value;
        if(inputText.trim()){
@@ -23,10 +25,10 @@ const Post = () => {
       <div className=' flex items-center justify-between'>     
           <div className='items-center gap-2 flex'>
            <Avatar>
-             <AvatarImage src="https://github.com/shadcn.png" className=' rounded-3xl h-12'/>
+             <AvatarImage src={post.author.profilePicture} className=' rounded-3xl h-12 w-12'/>
              <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <h1>username</h1>
+          <h1>{post.author?.username}</h1>
       </div>
       <Dialog>
          <DialogTrigger asChild>
@@ -35,12 +37,15 @@ const Post = () => {
             <DialogContent className="flex flex-col items-center text-sm text-center">
               <Button variant="ghost" className=" cursor-pointer w-fit text-[#ED4946] font-bold" >Unfollow</Button>
               <Button variant="ghost" className=" cursor-pointer w-fit " >Add to favorites</Button>
-              <Button variant="ghost" className=" cursor-pointer w-fit" >Delete</Button>
+              {
+                user && user?._id === post?.author._id &&   <Button variant="ghost" className=" cursor-pointer w-fit" >Delete</Button>
+
+              }
            </DialogContent>
       </Dialog>
     </div>
              <img 
-              src="https://cdn.imagecomics.com/files/read/radiant-black/RadiantBlack_0101.jpeg" 
+              src={post.image} 
              className=' rounded-sm my-2 w-full aspect-square object-contain-cover' 
              alt="" /> 
        <div className=' flex items-center justify-between my-2'>
@@ -51,12 +56,12 @@ const Post = () => {
          </div>
             <Bookmark className=' cursor-pointer hover:text-gray-600'/>
       </div>
-      <span className='font-medium block md-2'>1k likes</span>
+      <span className='font-medium block md-2'>{post.likes.length} likes</span>
       <p>
-        <span className=' font-medium mr-2'>Name</span>
-         caption
+        <span className=' font-medium mr-2'>{post.author?.username}</span>
+        {post.caption}
       </p>
-      <span  onClick={()=>setOpen(true)} className=' cursor-pointer' >Viwe all 10 comment</span>
+      <span  onClick={()=>setOpen(true)} className=' cursor-pointer' >Viwe all {post.comments.length} comment</span>
       <CommentDialog open={open} setOpen={setOpen}/>
       <div className=' flex items-center '>
         <input type="text" value={text} onChange={changeEventHandler} placeholder='Add a comment.....' className=' outline-none text-sm w-full' />

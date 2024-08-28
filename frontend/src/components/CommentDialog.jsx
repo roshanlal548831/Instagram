@@ -4,8 +4,11 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Link } from 'react-router-dom'
 import { MoreHorizontal } from 'lucide-react'
 import { Button } from './ui/button'
+import { useSelector } from 'react-redux'
 
 const CommentDialog = ({open,setOpen}) => {
+ 
+    
    const[text,setText] = useState("")
 
 
@@ -29,8 +32,8 @@ const CommentDialog = ({open,setOpen}) => {
         <div className='flex flex-1'>
        <div className='w-1/2'>
        <img 
-          src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-          alt="" className='w-full h-full object-cover rounded-l-lg'/>
+          src="https://images.pexels.com/photos/144474/pexels-photo-144474.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          alt="CN" className='w-full h-full object-cover rounded-l-lg'/>
        </div>
           <div className='w-1/2 flex flex-col justify-between p-4'>
             <div className='flex items-center justify-between '>

@@ -7,8 +7,15 @@ import { readFileAsDataURL } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'
+import { setPost } from '@/redux/PostSlice';
+
 
 const CreatePost = ({open, setOpen}) => {
+  const dipatch = useDispatch();
+  const {posts} = useSelector((store) => store.post)
+  const {user} = useSelector((store) => store.auth);
+  // console.log("crate",posts)
    const imgaRef = useRef()
    const[file,setFile] = useState("");
    const[caption,setCaption] = useState("");
@@ -37,11 +44,12 @@ const CreatePost = ({open, setOpen}) => {
         "Content-Type": "multipart/form-data"
       }
     });
-    console.log(res)
+    console.log("this is post",res.data.post)
     if(res.data.success){
+      dipatch(setPost([res.data.post,...posts]))
+      setOpen(false)
       toast.success(res.data.message)
     }
-    console.log(res.data)
      } catch (error) {
       console.log(error)
       toast.error(error.response.data.message)
@@ -56,11 +64,11 @@ const CreatePost = ({open, setOpen}) => {
         <DialogHeader className="text-center font-bold">Create new Post</DialogHeader>
         <div className='flex gap-3 items-center'>
          <Avatar>
-             <AvatarImage src="" alt="img"></AvatarImage>
+             <AvatarImage src={user?.profilePicture} alt="img"></AvatarImage>
                <AvatarFallback>CN</AvatarFallback>
          </Avatar>
            <div>
-               <h1 className=' font-semibold text-xs'>Username</h1>
+               <h1 className=' font-semibold text-xs'>{user?.username}</h1>
                <span className='text-gray-600 font-xs gap-3'>Bio here...</span>
            </div>
         </div>
@@ -68,7 +76,7 @@ const CreatePost = ({open, setOpen}) => {
          {
           imagePriview && (
             <div className='w-full min-h-96 flex items-center justify-center '>
-               <img src={imagePriview} alt="priviewImgae" className=' rounded-md object-cover h-full w-full'/>
+               <img src={imagePriview} alt="priviewImgae" className=' rounded-md object-cover h-96 w-full'/>
             </div>
           )
          }
