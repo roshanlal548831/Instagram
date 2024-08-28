@@ -19,8 +19,11 @@ export const addnewPost = async(req,res) => {
             
         }).toFormat("jpeg",{quality:80}).toBuffer();
       // buffer to data uri
-        const fileUri = `data:image/jpeg;base64,${optimizationBuffer.toString("base64")}`
+
+        const fileUri =  `data:image/jpeg;base64,${optimizationBuffer.toString("base64")}`
         const cloudResponese = await cloudinary.uploader.upload(fileUri);
+       console.log("this image",cloudResponese);
+
         const post = await Post.create({
             caption,
             image: cloudResponese.secure_url,
@@ -39,7 +42,7 @@ export const addnewPost = async(req,res) => {
        return res.status(200).json({
         post,
         message:"New post added",
-        success,
+        success:true
        })
 
 

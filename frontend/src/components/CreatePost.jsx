@@ -27,17 +27,21 @@ const CreatePost = ({open, setOpen}) => {
 
   const createPostHandler = async (e) => {
     e.preventDefault();
-    const formData = await new FormData()
+    const formData =  new FormData()
     formData.append("caption",caption);
     if(imagePriview) formData.append("image",file)
      try {
     setLoading(true)
-    console.log(formData)
-    // const res = await axios.post("/api/v1/post/addpost",);
-    // if(res.data.success){
-    //   toast(res)
-    // }
-    // console.log(res.data)
+    const res = await axios.post("/api/v1/post/addpost",formData,{
+      headers:{
+        "Content-Type": "multipart/form-data"
+      }
+    });
+    console.log(res)
+    if(res.data.success){
+      toast.success(res.data.message)
+    }
+    console.log(res.data)
      } catch (error) {
       console.log(error)
       toast.error(error.response.data.message)
