@@ -3,4 +3,6 @@ learn => mongodb;
 learn => cloudinary;
 learn => cookie;
 learn => multer;
-learn => Redux-Persist
+learn => Redux-Persist;
+
+learn => https production mode

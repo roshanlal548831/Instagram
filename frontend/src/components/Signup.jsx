@@ -34,7 +34,7 @@ const Signup = () => {
             toast("min 6 latter")
         }else{
             setLoading(true)
-            const res = await axios.post("http://localhost:8000/api/v1/user/register",input,)
+            const res = await axios.post("/api/v1/user/register",input,)
         if(res.data.success){
             
             toast.success(res.data.message)

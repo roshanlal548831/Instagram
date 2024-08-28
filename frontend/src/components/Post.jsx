@@ -42,7 +42,7 @@ const Post = () => {
              <img 
               src="https://cdn.imagecomics.com/files/read/radiant-black/RadiantBlack_0101.jpeg" 
              className=' rounded-sm my-2 w-full aspect-square object-contain-cover' 
-             alt="" />
+             alt="" /> 
        <div className=' flex items-center justify-between my-2'>
          <div className='flex items-center gap-3'>
             <FaRegHeart size={'22px'}/>

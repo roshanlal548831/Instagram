@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom'
 import RightSidebar from './RightSidebar'
 
 const Home = () => {
+
   return (
     <div className='flex'>
       <div className='flex justify-center flex-grow'>

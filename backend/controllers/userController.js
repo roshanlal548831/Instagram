@@ -27,13 +27,17 @@ export const register = async (req,res) => {
       const data =  await User({name,username,password:hashpassword});
       await data.save()
 
-      const token = await jwt.sign({userId:User._id},process.env.SECRET_KEY,{expiresIn:"1d"});
+    //   const token = await jwt.sign({userId:User._id},process.env.SECRET_KEY,{expiresIn:"1d"});
 
        if(data){
-           return res.cookie("token",token,{httpOnly:true,sameSite:"strict",maxAge:1*24*60*1000}).json({
-            message: "Account created success",
-            success: true
-           })
+        //    return res.cookie("token",token,{httpOnly:true,sameSite:"strict",maxAge:1*24*60*1000}).json({
+        //     message: "Account created success",
+        //     success: true
+        //    })
+        return res.status(200).json({
+            message:"Accout created",
+            success:true
+        })
        }
          
     } catch (error) {
@@ -57,35 +61,39 @@ export const login = async(req,res) => {
         };
     
         const hashpassword = await bcryptjs.compare(password,user.password);
-        const token = await jwt.sign({userId:user._id},process.env.SECRET_KEY,{expiresIn:"1d"});
         if(hashpassword){
             // populate each post if in the post array;
             const populatedPost = await Promise.all(
                 user.posts.map(async (postId) => {
                     const post = await Post.findById(postId);
                     if(post.author.equals(user._id)){
-                        return post
-                        
+                        return post 
                     }
                     return null
                 })
             )
-          const users = {
-             _id:user.id,
-             username:user.username,
-             email:user.email,
-             profilePicture:user.profilePicture,
-             bio:user.bio,
-             following:user.following,
-             followers:user.followers,
-             posts:populatedPost
+            const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: "1d" });
+            const users = {
+                _id: user.id,
+                username: user.username,
+                email: user.email,
+                profilePicture: user.profilePicture,
+                bio: user.bio,
+                following: user.following,
+                followers: user.followers,
+                posts: populatedPost
             }
-           return await res.cookie("token",token,{httpOnly:true,sameSite:"strict",maxAge:1*24*60*1000}).json({
+             return await res.cookie("token",token,{
+                httpOnly: true,
+                 maxAge: 24 * 60 * 60 * 1000,
+                }).json({
             message: `welcome back ${user.username}`,
             users,
             success:true,
             token,
+            name:"Roshan"
            });
+    
           
         }else{
             return res.status(401).json({

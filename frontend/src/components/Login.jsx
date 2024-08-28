@@ -34,7 +34,8 @@ const login = () => {
             toast("fill the all input")
         }else{
             setLoading(true)
-            const res = await axios.post("http://localhost:8000/api/v1/user/login",input)
+            const res = await axios.post("/api/v1/user/login",input,)
+            console.log(res.data)
             if(res.data.success){
              toast.success(res.data.message)
              setInput({
@@ -51,8 +52,12 @@ const login = () => {
     } catch (error) {
     // setLoading(true)
     // setLoading(true)
+    console.log(error)
     toast.error(error.response.data.message)
-    }
+
+    }finally{
+        setLoading(false)
+       }
 
    } 
 

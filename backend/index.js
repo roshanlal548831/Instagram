@@ -3,8 +3,8 @@ configDotenv.config();
 
 
 import express from 'express';
-import cors from 'cors';
 import cookieParser from "cookie-parser";
+import cors from 'cors';
 import { connectDB } from './utils/db.js';
 import router from './router/userRoute.js';
 import postRoute from "./router/postRouter.js"
@@ -20,7 +20,7 @@ app.use(cookieParser())
 const corsOption = {
     origin:"http://localhost:5173",
     methods: "GET, POST, PUT, DELETE, PATCH, HEAF",
-    credentials:true
+    credentials: true
 }
 
 app.use(cors(corsOption));
