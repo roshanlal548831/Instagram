@@ -27,17 +27,14 @@ export const register = async (req,res) => {
       const data =  await User({name,username,password:hashpassword});
       await data.save()
 
-    //   const token = await jwt.sign({userId:User._id},process.env.SECRET_KEY,{expiresIn:"1d"});
+      const token = jwt.sign({ userId: User._id }, process.env.SECRET_KEY, { expiresIn: "1d" });
 
        if(data){
-        //    return res.cookie("token",token,{httpOnly:true,sameSite:"strict",maxAge:1*24*60*1000}).json({
-        //     message: "Account created success",
-        //     success: true
-        //    })
-        return res.status(200).json({
-            message:"Accout created",
-            success:true
-        })
+           return res.cookie("token",token,{httpOnly:true,maxAge:1*24*60*1000}).json({
+            message: "Account created success",
+            success: true
+           })
+      
        }
          
     } catch (error) {

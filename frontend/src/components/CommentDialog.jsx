@@ -1,18 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Link } from 'react-router-dom'
 import { MoreHorizontal } from 'lucide-react'
 import { Button } from './ui/button'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import Comment from './Comment'
+import { setPost } from '@/redux/PostSlice'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const CommentDialog = ({open,setOpen}) => {
  
-    
+  const {selectedPost,posts} = useSelector(store => store.post);
+  const dispatch = useDispatch();
+
+  const[comment,setComment] = useState([])
    const[text,setText] = useState("")
 
+  useEffect(()=>{
+    console.log("hello")
+    if(selectedPost){
+       setComment(selectedPost?.comments)
+    }
+  },[dispatch])
 
-   const onchangetext = (e) =>{
+ const onchangetext = (e) =>{
   const textData = e.target.value
   if(textData.trim()){
     setText(textData)
@@ -21,32 +34,58 @@ const CommentDialog = ({open,setOpen}) => {
    }
      
    }
+   
+   const handleSubmit = async () => {
+    try {
+      const res = await axios.post(`/api/v1/post/${selectedPost?._id}/comment`,{text},{
+        headers:{
+          "Content-Type":"application/json"
+        },
+        withCredentials:true
+      });
+  
+      console.log(res)
+  
+      if(res.data.success){
+        const updatedCommentData = [...comment, res.data.comment]
+        setComment(updatedCommentData)
+  
+      const updatedPostdate =  posts.map(p =>
+         p._id === selectedPost._id ? {...p, comments:updatedCommentData } :  p
+    );
+  
+    dispatch(setPost(updatedPostdate))
+  
+        toast.success(res.data.message);
+        setText("")
+      }
+    } catch (error) {
+    console.log(error)
+    }
+  }
+  
 
-   const handleSubmit = (e) =>{
-     e.preventDefault();
-    alert(text)
-   }
   return (
     <Dialog open={open}>
       <DialogContent  onInteractOutside={() =>  setOpen(false)} className="max-w-5xl h-full p-0 flex-col my-2">
         <div className='flex flex-1'>
        <div className='w-1/2'>
        <img 
-          src="https://images.pexels.com/photos/144474/pexels-photo-144474.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          src={selectedPost?.image}
           alt="CN" className='w-full h-full object-cover rounded-l-lg'/>
        </div>
           <div className='w-1/2 flex flex-col justify-between p-4'>
             <div className='flex items-center justify-between '>
-                <div className='flex gap-3 items-center'>
+                <div className='flex  gap-3 items-center '>
                 <Link>
                    <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarImage src={selectedPost?.author?.profilePicture} />
                         <AvatarFallback >CN</AvatarFallback>         
                     </Avatar>
                </Link>
                  <div>
-                     <Link className=' font-semibold text-xs'> Username</Link>
-                <span className='ml-4 text-sm'>Bio here ...</span>
+                     <Link className=' font-semibold text-xs'>{selectedPost?.author?.username}</Link>
+                  <span className='ml-4 text-sm'>Bio here ...</span>
                 </div>
                 
             </div>
@@ -70,14 +109,16 @@ const CommentDialog = ({open,setOpen}) => {
             </div>
             <hr />
             <div className='flex-1 overflow-y-auto h-full p-4 '>
-              <h1> Comment ayenge</h1>
+             {
+              comment.map((comment,i)=> <Comment key={i} comment={comment} />)
+             }
             </div>
             <div className='p-4'>
                {/* <div className='flex items-center gap-2'> */}
-                <form  onSubmit={handleSubmit} className='flex items-center gap-2'>
+                <div   className='flex items-center gap-2'>
                    <input value={text}  onChange={onchangetext} type="text" placeholder='Add a comment...' className='w-full outline-none border border-gray-300 p-2 rounded' />
-                   <Button disabled={!text.trim()} type="submit" variant="outline">Send</Button>
-                </form>
+                   <Button disabled={!text.trim()} onClick={handleSubmit} type="submit" variant="outline">Send</Button>
+                </div>
                {/* </div> */}
             </div>
           </div>

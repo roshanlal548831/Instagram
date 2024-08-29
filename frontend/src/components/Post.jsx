@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Bookmark, MessageCircle, MoreHorizontal, Send } from 'lucide-react'
 import { Button, } from './ui/button'
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
@@ -8,9 +8,11 @@ import CommentDialog from './CommentDialog'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { setPost } from '@/redux/PostSlice'
+import { setPost, setSelectedPost } from '@/redux/PostSlice'
 
 const Post = ({post}) => {
+
+
   const[open,setOpen] = useState(false)
   const[text,setText] = useState("")
   
@@ -18,8 +20,12 @@ const Post = ({post}) => {
 
   const[liked,setLike] = useState(post.likes.includes(user?._id) || false);
   const[postLike,setPostLike] = useState(post.likes.length)
+  const[comment,setComment] = useState(post.comments)
+
   const {posts} = useSelector((store) => store.post)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+
   const changeEventHandler = (e) => {
        const inputText = e.target.value;
        if(inputText.trim()){
@@ -51,6 +57,35 @@ const likeOrDislikeHanler = async () =>{
       console.log(error);
       
     }
+}
+
+const commentHandler = async () => {
+  try {
+    const res = await axios.post(`/api/v1/post/${post?._id}/comment`,{text},{
+      headers:{
+        "Content-Type":"application/json"
+      },
+      withCredentials:true
+    });
+
+    console.log(res)
+
+    if(res.data.success){
+      const updatedCommentData = [...comment, res.data.comment]
+      setComment(updatedCommentData)
+
+    const updatedPostdate =  posts.map(p =>
+       p._id === post._id ? {...p, comments:updatedCommentData } :  p
+  );
+
+  dispatch(setPost(updatedPostdate))
+
+      toast.success(res.data.message);
+      setText("")
+    }
+  } catch (error) {
+  console.log(error)
+  }
 }
 
   const deletePostHandler = async() => {
@@ -101,8 +136,12 @@ const likeOrDislikeHanler = async () =>{
           {
             liked ? <FaHeart size={"24"} onClick={likeOrDislikeHanler}  className=' cursor-pointer text-red-600'/> :   <FaRegHeart onClick={likeOrDislikeHanler} className=' cursor-pointer' size={'22px'}/>
           }
-              <MessageCircle onClick={() => setOpen(true)} className='cursor-pointer hover:text-gray-600 '/>
-               <Send  className=' cursor-pointer hover:text-gray-600'/>
+              <MessageCircle onClick={() =>{
+                dispatch(setSelectedPost(post))
+                 setOpen(true)
+                 
+                 }} className='cursor-pointer hover:text-gray-600 '/>
+              <Send  className=' cursor-pointer hover:text-gray-600'/>
          </div>
             <Bookmark className=' cursor-pointer hover:text-gray-600'/>
       </div>
@@ -111,12 +150,21 @@ const likeOrDislikeHanler = async () =>{
         <span className=' font-medium mr-2'>{post.author?.username}</span>
         {post.caption}
       </p>
-      <span  onClick={()=>setOpen(true)} className=' cursor-pointer' >Viwe all {post.comments.length} comment</span>
+      {
+        comment.length > 0 && (
+          <span  onClick={() =>{
+            dispatch(setSelectedPost(post))
+             setOpen(true)
+             
+             }} className=' cursor-pointer' >Viwe all {comment.length} comment</span>
+        )
+      }
+    
       <CommentDialog open={open} setOpen={setOpen}/>
       <div className=' flex items-center '>
         <input type="text" value={text} onChange={changeEventHandler} placeholder='Add a comment.....' className=' outline-none text-sm w-full' />
         {
-          text &&  <span className='text-[#3BADF8]'>Post</span>
+          text &&  <span onClick={commentHandler} className='text-[#3BADF8] cursor-pointer'>Post</span>
         }
        
       </div>

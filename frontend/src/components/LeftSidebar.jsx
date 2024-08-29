@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CreatePost from './CreatePost';
+import { setPost, setSelectedPost } from '@/redux/PostSlice';
 
 
 const LeftSidebar = () => {
@@ -20,6 +21,8 @@ const LeftSidebar = () => {
     const logOutHandler = async () =>{
         try {
             const res = await axios.get("/api/v1/user/logout");
+            dispatch(setSelectedPost(null));
+            dispatch(setPost([]));
             console.log(res.data)
             if(res.data.success){
            dispatch(setAuthUser(null))
