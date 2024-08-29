@@ -1,5 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Bookmark, MessageCircle, MoreHorizontal, Send } from 'lucide-react'
 import { Button, } from './ui/button'
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog'
@@ -9,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { setPost, setSelectedPost } from '@/redux/PostSlice'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Badge } from './ui/badge';
 
 const Post = ({post}) => {
 
@@ -112,6 +113,7 @@ const commentHandler = async () => {
              <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <h1>{post.author?.username}</h1>
+         {user?._id === post.author?._id && <Badge variant="secondary">Author</Badge> } 
       </div>
       <Dialog>
          <DialogTrigger asChild>

@@ -23,7 +23,7 @@ const CommentDialog = ({open,setOpen}) => {
     if(selectedPost){
        setComment(selectedPost?.comments)
     }
-  },[dispatch])
+  },[])
 
  const onchangetext = (e) =>{
   const textData = e.target.value
