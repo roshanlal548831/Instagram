@@ -106,9 +106,10 @@ export const  getUserPost = async (req,res) =>{
 
 export const likePost = async (req,res) =>{
     try {
-        const likekarneWalakiId = req.id;
-        const postId = req.params.id;
-        const post = await Post.findById({postId})
+        const likekarneWalakiId = await req.id;
+        const postId = await req.params.id;
+        const post = await Post.findById({_id:postId})
+        console.log("this is post id",post)
         if(!post) return res.status(404).json({message:"Post not found",success:false})
             // like logic started 
         await post.updateOne({$addToSet:{likes:likekarneWalakiId}});
@@ -120,14 +121,14 @@ export const likePost = async (req,res) =>{
     return res.status(200).json({message:"Post liked",success:true})
 
     } catch (error) {
-        console.log(error)
+        console.log("this is error data like => ",error)
     }
 }
 export const dislikePost = async (req,res) =>{
     try {
         const likekarneWalakiId = req.id;
         const postId = req.params.id;
-        const post = await Post.findById({postId})
+        const post = await Post.findById({_id:postId})
         if(!post) return res.status(404).json({message:"Post not found",success:false})
             // like logic started 
         await post.updateOne({$pull:{likes:likekarneWalakiId}});
@@ -139,7 +140,7 @@ export const dislikePost = async (req,res) =>{
     return res.status(200).json({message:"Post disliked",success:true})
 
     } catch (error) {
-        console.log(error)
+        console.log("this is dislike data => ",error)
     }
 };
 

@@ -16,7 +16,7 @@ router.use(express.urlencoded({extended:true}));
  router.route("/:id/dislike").get(isAuthicated,dislikePost);
  router.route("/:id/comment").post(isAuthicated,addComment);
  router.route("/:id/comment/all").post(isAuthicated,getCommentsPost);
- router.route("/delete/:id").post(isAuthicated,deletePost);
+ router.route("/delete/:id").delete(isAuthicated,deletePost);
  router.route("/:id/bookmark").post(isAuthicated,bookmarkPost);
 
 export default router
