@@ -40,6 +40,8 @@ const LeftSidebar = () => {
         logOutHandler()
        }else if(texttype === "Create"){
           setOpen(true)
+       }else if(texttype === "Profile"){
+         navigate(`profile/${user?._id}`)
        }
    };
    const sidebarItems = [

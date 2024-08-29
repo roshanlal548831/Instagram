@@ -16,7 +16,7 @@ function App() {
       element:<Mainlayout/>,
       children:[
         {
-          path: "/profile",
+          path: "/profile/:id",
           element:<Profile/>
         },
         {
