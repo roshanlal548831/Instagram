@@ -19,7 +19,6 @@ const CommentDialog = ({open,setOpen}) => {
    const[text,setText] = useState("")
 
   useEffect(()=>{
-    console.log("hello")
     if(selectedPost){
        setComment(selectedPost?.comments)
     }
@@ -54,7 +53,7 @@ const CommentDialog = ({open,setOpen}) => {
          p._id === selectedPost._id ? {...p, comments:updatedCommentData } :  p
     );
   
-    dispatch(setPost(updatedPostdate))
+     dispatch(setPost(updatedPostdate))
   
         toast.success(res.data.message);
         setText("")
