@@ -12,10 +12,11 @@ const Profile = () => {
   const userId = param.id;
   const[activetab,setactivetab] = useState('post')
   useGetUserProfile(userId);
-  const {userProfile} = useSelector(store => store.auth);
-  console.log("this userdata",userProfile);
 
-  const isLoggedInUserProfile = true;
+  const {userProfile,user} = useSelector(store => store.auth);
+
+
+  const isLoggedInUserProfile = user?._id === userProfile?._id
   const isFollowing = false
 
   const handletabChange = (tab) =>{
@@ -31,7 +32,7 @@ const Profile = () => {
       </div>
       <div className='grid grid-cols-2'> 
         <section className='flex items-center justify-center'>
-        <Avatar className="h-32 w-36">
+        <Avatar className="h-36 w-36">
           <AvatarImage src={userProfile?.profilePicture} alt="profilePicture"/>
           <AvatarFallback>CN</AvatarFallback>
        </Avatar>
@@ -43,7 +44,7 @@ const Profile = () => {
               {
                 isLoggedInUserProfile ? (
                   <>
-                 <Link> <Button variant="secondary" className="hover:bg-gray-200 h-8">Edit Profile</Button></Link>
+                 <Link to="/account/edit"> <Button variant="secondary" className="hover:bg-gray-200 h-8">Edit Profile</Button></Link>
                   <Button variant="secondary" className="hover:bg-gray-200 h-8">View archive</Button>
                   <Button variant="secondary" className="hover:bg-gray-200 h-8">ad tools</Button>
                 </>
@@ -86,7 +87,6 @@ const Profile = () => {
            <div className=' grid grid-cols-3 gap-5'>
               {
                 displayedPost.map((post)=>{
-                  console.log(post)
                   return (
                     <div key={post?._id} className=' relative group cursor-pointer'>
                       <img src={post?.image} alt="postimage" className='rounded-sm my-2 w-full aspect-square object-cover  ' />
