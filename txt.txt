@@ -8,4 +8,4 @@ learn => Redux-Persist;
 learn => https production mode;
 
 
-8:14:00
+8:46:00

@@ -9,6 +9,7 @@ import {
 import Home from './components/Home'
 import Mainlayout from './components/Mainlayout'
 import Profile from './components/Profile';
+import EditProfile from './components/EditProfile';
 function App() {
   const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ function App() {
         {
           path: "/profile/:id",
           element:<Profile/>
+        },
+        {
+          path: "/account/edit",
+          element:<EditProfile/>
         },
         {
           path: "/home",

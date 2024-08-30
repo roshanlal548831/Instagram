@@ -42,6 +42,8 @@ const LeftSidebar = () => {
           setOpen(true)
        }else if(texttype === "Profile"){
          navigate(`profile/${user?._id}`)
+       }else if(texttype === "Home"){
+        navigate('/home')
        }
    };
    const sidebarItems = [
