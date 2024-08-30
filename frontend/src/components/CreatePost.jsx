@@ -15,7 +15,6 @@ const CreatePost = ({open, setOpen}) => {
   const dipatch = useDispatch();
   const {posts} = useSelector((store) => store.post)
   const {user} = useSelector((store) => store.auth);
-  // console.log("crate",posts)
    const imgaRef = useRef()
    const[file,setFile] = useState("");
    const[caption,setCaption] = useState("");
@@ -44,10 +43,12 @@ const CreatePost = ({open, setOpen}) => {
         "Content-Type": "multipart/form-data"
       }
     });
-    console.log("this is post",res.data.post)
     if(res.data.success){
       dipatch(setPost([res.data.post,...posts]))
-      setOpen(false)
+      setOpen(false);
+      setFile("")
+      setCaption(""),
+
       toast.success(res.data.message)
     }
      } catch (error) {
@@ -80,7 +81,7 @@ const CreatePost = ({open, setOpen}) => {
             </div>
           )
          }
-         <input  ref={imgaRef} type="file" className=' hidden' onChange={fileChangehandler}/>
+         <input  ref={imgaRef}  type="file" className=' hidden' onChange={fileChangehandler}/>
          <Button onClick={()=> imgaRef.current.click()} className='w-fit mx-auto bg-[#0095F6] hover:bg-[#66c2da54]'>Select from computer</Button>
           {
             imagePriview && (

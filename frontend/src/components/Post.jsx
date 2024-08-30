@@ -129,10 +129,12 @@ const commentHandler = async () => {
            </DialogContent>
       </Dialog>
     </div>
-             <img 
+            <div className='w-full border h-fit'>
+            <img 
               src={post.image} 
-             className=' rounded-sm my-2 w-full aspect-square object-contain-cover' 
-             alt="" /> 
+             className=' rounded-sm my-2 aspect-square object-contain-cover ' 
+             alt=""  height={"100%"} /> 
+            </div>
        <div className=' flex items-center justify-between my-2'>
          <div className='flex items-center gap-3'>
           {

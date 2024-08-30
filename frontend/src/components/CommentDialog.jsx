@@ -16,13 +16,14 @@ const CommentDialog = ({open,setOpen}) => {
   const dispatch = useDispatch();
 
   const[comment,setComment] = useState([])
+  console.log(comment)
    const[text,setText] = useState("")
 
   useEffect(()=>{
     if(selectedPost){
        setComment(selectedPost?.comments)
     }
-  },[])
+  },[open],[setOpen])
 
  const onchangetext = (e) =>{
   const textData = e.target.value
@@ -109,7 +110,7 @@ const CommentDialog = ({open,setOpen}) => {
             <hr />
             <div className='flex-1 overflow-y-auto h-full p-4 '>
              {
-              comment.map((comment,i)=> <Comment key={i} comment={comment} />)
+              comment.map((comment)=> <Comment comment={comment} />)
              }
             </div>
             <div className='p-4'>
