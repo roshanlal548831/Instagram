@@ -9,10 +9,9 @@ import { connectDB } from './utils/db.js';
 import router from './router/userRoute.js';
 import postRoute from "./router/postRouter.js"
 import messageRoute from "./router/messageRoute.js"
+import { app,server } from './shocket/sockt.js';
 
 
-
-const app = express();
 const port = process.env.PORT || 3000
 
 app.use(cookieParser())
@@ -32,7 +31,7 @@ app.use("/api/v1/user",router)
 app.use("/api/v1/post",postRoute)
 app.use("/api/v1/message",messageRoute)
 
-app.listen(port,()=>{
+server.listen(port,()=>{
     connectDB()
     console.log(`server run 8000 ${port}`)
 })
