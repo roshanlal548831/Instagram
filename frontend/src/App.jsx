@@ -18,7 +18,8 @@ import { setOnlineUsers } from './redux/ChatSlice';
 
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const {socket} = useSelector(store => store.socketio)
   
   const {user} = useSelector(store => store.auth)
 
@@ -41,8 +42,8 @@ function App() {
           socketio.close()
           dispatch(setSocket(null));
         }
-      }else{
-        socketio.close()
+      }else if (socket){
+        socket?.close()
         dispatch(setSocket(null));
       }
   },[user,dispatch])

@@ -44,6 +44,8 @@ const LeftSidebar = () => {
          navigate(`profile/${user?._id}`)
        }else if(texttype === "Home"){
         navigate('/home')
+       }else if(texttype === "Message"){
+        navigate("/chat")
        }
    };
    const sidebarItems = [
@@ -64,7 +66,7 @@ const LeftSidebar = () => {
 ]
   return (
     
-    <div className='fixed top-8 z-10 left-0 px-4 border-r border-gray:300 w-[16%] h-screen'>
+    <div className='fixed top-8 z-10 left-0 px-4 border-r border-gray:300 w-[16%] h-screen '>
         <div className='flex flex-col'>
             <div>
 
