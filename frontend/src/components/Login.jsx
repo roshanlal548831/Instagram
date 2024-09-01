@@ -35,7 +35,7 @@ const login = () => {
         }else{
             setLoading(true)
             const res = await axios.post("/api/v1/user/login",input,)
-            console.log(res.data)
+            console.log("this is data => ",res.data)
             if(res.data.success){
              toast.success(res.data.message)
              setInput({

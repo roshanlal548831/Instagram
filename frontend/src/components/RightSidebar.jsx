@@ -6,6 +6,7 @@ import SuggestedUsers from './SuggestedUsers';
 
 const RightSidebar = () => {
   const {user} = useSelector(store => store.auth);
+  // console.log("thsi is Id",user)
   return (
     <div className='w-fit my-10 pr-36 h-fit'>
       <div className='items-center gap-2 flex'>
@@ -16,7 +17,7 @@ const RightSidebar = () => {
           </Avatar>
         </Link>
      <div >
-         <h1 className=' font-semibold'><Link to={`/profile/${user._id}`}>{user?.username}</Link></h1>
+         <h1 className=' font-semibold'><Link to={`/profile/${user?._id}`}>{user?.username}</Link></h1>
          <span className='text-gray-600 text-sm'>{user?.bio || 'Bio here...'}</span>
      </div>
      </div>

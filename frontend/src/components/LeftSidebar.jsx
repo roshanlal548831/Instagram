@@ -8,10 +8,14 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CreatePost from './CreatePost';
 import { setPost, setSelectedPost } from '@/redux/PostSlice';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Button } from './ui/button';
 
 
 const LeftSidebar = () => {
      const navigate = useNavigate()
+     const {likeNotification} = useSelector(store => store.realTimeNotification);
+     console.log("thisis ",likeNotification)
      const {user} = useSelector(store => store.auth);
      const dispatch = useDispatch()
     const[open,setOpen] = useState(false);
@@ -77,6 +81,35 @@ const LeftSidebar = () => {
                   <div onClick={() => sidebarHandler(item.text)} key={i} className='flex items-center relative gap-3 my-3 hover:bg-gray-100 cursor-pointer rounded-lg p-4 '>
                    {item.icon}
                    <span>{item.text}</span>
+                   {
+                       item.text === "Notification" && likeNotification?.length > 0 && (
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                    <Button size="icone" className="rounded-full h-5 w-5 bg-red-600 hover:bg-red-600 absolute bottom-6 left-6">{likeNotification.length}</Button>
+                            </PopoverTrigger>
+                            <PopoverContent>
+                                 <div>
+
+                                    {
+                                        likeNotification.length === 0 ? (<p>No new Notification</p>) : (
+                                            likeNotification.map((notification)=>{
+                                                return(
+                                                    <div key={notification?.userId} className='flex items-center gap-2'>
+                                                          <Avatar>
+                                                             <AvatarImage src={notification.userDetails?.profilePicture} className=" rounded-full h-8 w-8"/>
+                                                             <AvatarFallback>CN</AvatarFallback>
+                                                          </Avatar>
+                                                          <p className='text-sm'><span className='font-bold'>{notification.userDetails?.username} </span>liked your post</p>
+                                                    </div>
+                                                )
+                                            })
+                                        )
+                                    }
+                                 </div>
+                            </PopoverContent>
+                        </Popover>
+                       )
+                   }
                </div>
             )
         })

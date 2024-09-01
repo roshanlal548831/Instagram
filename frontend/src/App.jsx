@@ -15,6 +15,7 @@ import { io } from 'socket.io-client';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSocket } from './redux/SocketSlice';
 import { setOnlineUsers } from './redux/ChatSlice';
+import { setLikeNotification } from './redux/RTNSlice';
 
 
 function App() {
@@ -38,6 +39,11 @@ function App() {
         socketio.on("getOnlineUsers",(onlineUser)=>{
           dispatch(setOnlineUsers(onlineUser))
         });
+
+        socketio.on("notification",(notification)=>{
+          dispatch(setLikeNotification(notification))
+        });
+
         return () => {
           socketio.close()
           dispatch(setSocket(null));

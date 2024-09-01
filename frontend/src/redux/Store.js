@@ -3,6 +3,7 @@ import authSlice from "./AuthSlice";
 import postSlice from "./PostSlice";
 import socketSlice from "./SocketSlice";
 import chatSclice from "./ChatSlice";
+import RTNSlice from "./RTNSlice";
 
 
 import {
@@ -28,7 +29,8 @@ import {
       auth:authSlice,
       post:postSlice,
       socketio:socketSlice,
-      chat:chatSclice
+      chat:chatSclice,
+      realTimeNotification:RTNSlice
 
     });
     

@@ -40,13 +40,12 @@ const likeOrDislikeHanler = async () =>{
     try {
       const action = liked ? "dislike" : "like"
       const res = await axios.get(`api/v1/post/${post._id}/${action}`,{withCredentials:true});
-      console.log(res)
          if(res.data.success){
           setLike(!liked)
           const updatedLike = liked ? postLike -1 : postLike +1
           setPostLike(updatedLike);
           //apne post ki update karunga
-          const updatedPostDate = posts.map(p=> p._id === post._id ? {
+          const updatedPostDate = posts.map(p => p._id === post._id ? {
             ...p,
             likes:liked ? p.likes.filter(id=> id === user._id): [...p.likes,user._id]
           }:p

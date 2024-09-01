@@ -3,8 +3,7 @@ import cloudinary from "../utils/cloudinary.js";
 import { Post } from "../models/postModels.js";
 import { User } from "../models/userModel.js";
 import { Comment } from "../models/commentModel.js";
-import { get } from "mongoose";
-import { getReceiverSockeId } from "../shocket/sockt.js";
+import { getReceiverSockeId, io } from "../shocket/sockt.js";
 
 export const addnewPost = async(req,res) => {
     try {
@@ -111,7 +110,6 @@ export const likePost = async (req,res) =>{
         const likekarneWalakiId = await req.id;
         const postId = await req.params.id;
         const post = await Post.findById({_id:postId})
-        console.log("this is post id",post)
         if(!post) return res.status(404).json({message:"Post not found",success:false})
             // like logic started 
         await post.updateOne({$addToSet:{likes:likekarneWalakiId}});
