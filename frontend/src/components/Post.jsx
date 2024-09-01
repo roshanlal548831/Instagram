@@ -13,7 +13,7 @@ import { Badge } from './ui/badge';
 
 const Post = ({post}) => {
 
-
+console.log("this is post ",post)
   const[open,setOpen] = useState(false)
   const[text,setText] = useState("")
   
@@ -101,6 +101,18 @@ const commentHandler = async () => {
          toast.error(error.response.data.message)
          
        }
+  };
+
+  const BookmarkHandler = async() => {
+      try {
+        const res = await axios.get(`/api/v1/post/${post?._id}/bookmark`,{withCredentials:true});
+        console.log("bookmart data => ",res.data)
+        if(res.data.success){
+          toast.success(res.data.message);
+        }
+      } catch (error) {
+        console.log("boomark errorr ",error)
+      }
   }
   return (
     <>
@@ -119,7 +131,10 @@ const commentHandler = async () => {
             <MoreHorizontal className=' cursor-pointer'/>
          </DialogTrigger>   
             <DialogContent className="flex flex-col items-center text-sm text-center">
-              <Button variant="ghost" className=" cursor-pointer w-fit text-[#ED4946] font-bold" >Unfollow</Button>
+              {
+                post?.author?._id !== user?._id &&  <Button variant="ghost" className=" cursor-pointer w-fit text-[#ED4946] font-bold" >Unfollow</Button>
+
+              }
               <Button variant="ghost" className=" cursor-pointer w-fit " >Add to favorites</Button>
               {
                 user && user?._id === post?.author._id &&   <Button onClick={deletePostHandler} variant="ghost" className=" cursor-pointer w-fit" >Delete</Button>
@@ -146,7 +161,7 @@ const commentHandler = async () => {
                  }} className='cursor-pointer hover:text-gray-600 '/>
               <Send  className=' cursor-pointer hover:text-gray-600'/>
          </div>
-            <Bookmark className=' cursor-pointer hover:text-gray-600'/>
+            <Bookmark onClick={BookmarkHandler} className=' cursor-pointer hover:text-gray-600'/>
       </div>
       <span className='font-medium block md-2'>{postLike} likes</span>
       <p>

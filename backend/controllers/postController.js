@@ -266,6 +266,7 @@ export const bookmarkPost = async (req,res) =>{
         });
 
         const user = await User.findById(authorIs);
+        console.log("thi bookmark ",user)
         if(user.bookmarks.includes(post._id)){
           // already bookmaekd -> remove from the bookmark 
           await user.updateOne({$pull:{bookmarks:post._id}});
