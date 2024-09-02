@@ -21,7 +21,7 @@ const __dirname = path.resolve()
 app.use(cookieParser())
 
 const corsOption = {
-    origin:"http://localhost:5173",
+    origin:process.env.URL,
     methods: "GET, POST, PUT, DELETE, PATCH, HEAF",
     credentials: true
 }
