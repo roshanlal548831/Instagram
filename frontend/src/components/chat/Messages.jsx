@@ -16,11 +16,15 @@ const {message} = useSelector(store => store.chat);
   return (
     <div className='overflow-y-auto flex-1 p-4'>
         <div className='flex justify-center flex-col items-center'>
+        <Link to={`/profile/${selectedUser._id}`}>
             <Avatar className="h-20 w-20">
                 <AvatarImage src={selectedUser?.profilePicture} alt="profile"/>
                 <AvatarFallback>CN</AvatarFallback>
             </Avatar>
+            </Link>
+            <Link to={`/profile/${selectedUser._id}`}>
           <span>{selectedUser?.name}</span>
+          </Link>
           <Link to={`/profile/${selectedUser._id}`}><Button variant="secondary" className="h-8 my-2">View profile</Button></Link>
         </div>
         <div className=' flex flex-col gap-3'>

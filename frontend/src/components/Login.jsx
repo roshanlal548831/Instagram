@@ -1,13 +1,15 @@
 
 import { setAuthUser } from '@/redux/AuthSlice';
 import axios from 'axios';
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { User } from 'lucide-react';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const login = () => {
+    const {user} = useSelector(store => store.auth)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const[input,setInput] = useState({
@@ -44,7 +46,7 @@ const login = () => {
             })
             console.log("user data",res.data.users)
             dispatch(setAuthUser(res.data.users))
-            navigate("/")
+            navigate("/home")
             } 
         }
       
@@ -60,7 +62,11 @@ const login = () => {
        }
 
    } 
-
+useEffect(()=>{
+    if(user){
+        navigate("/home")
+    }
+},[])
   return (
     <>
     

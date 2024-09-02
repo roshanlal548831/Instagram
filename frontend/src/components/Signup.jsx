@@ -1,12 +1,14 @@
 
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
     const navigate = useNavigate()
+    const {user} = useSelector(store => store.auth)
     const[input,setInput] = useState({
         name:"",
         username:"",
@@ -43,7 +45,7 @@ const Signup = () => {
             username:"",
             password:"",
         })
-        navigate("/")
+        navigate("/home")
         } 
         }
       
@@ -54,6 +56,12 @@ const Signup = () => {
     }
 
    } 
+
+   useEffect(()=>{
+    if(user){
+        navigate("/home")
+    }
+},[])
 
   return (
     <>

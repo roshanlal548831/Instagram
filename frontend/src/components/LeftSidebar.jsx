@@ -78,7 +78,7 @@ const LeftSidebar = () => {
       {
           sidebarItems.map((item,i) => {
               return(
-                  <div onClick={() => sidebarHandler(item.text)} key={i} className='flex items-center relative gap-3 my-3 hover:bg-gray-100 cursor-pointer rounded-lg p-4 '>
+                  <div onClick={() => sidebarHandler(item.text)} key={i} className='flex items-center relative gap-3 my-3 hover:bg-gray-100 cursor-pointer rounded-lg p-4'>
                    {item.icon}
                    <span>{item.text}</span>
                    {

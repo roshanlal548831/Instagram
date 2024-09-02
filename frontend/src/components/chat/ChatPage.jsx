@@ -7,6 +7,7 @@ import { MessageCircle } from 'lucide-react';
 import Messages from './Messages';
 import axios from 'axios';
 import { setMessages } from '@/redux/ChatSlice';
+import { Link } from 'react-router-dom';
 
 const ChatPage = () => {
     const[textMessage,setTextMessage] = useState("");
@@ -68,10 +69,12 @@ useEffect(()=>{
             selectedUser? (
              <section className='flex-1 border-l border-l-gray-300 flex  flex-col h-full'>
                     <div className='flex gap-3 items-center px-3 py-2 border-b border-gray-300 sticky top-0 bg-white z-10'>
+                      <Link to={`/profile/${user?._id}`}>
                       <Avatar>
                             <AvatarImage src={selectedUser?.profilePicture} alt="profile pic"/>
                             <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
+                      </Link>
                     <div className='flex flex-col'>
                         <span>{selectedUser?.username}</span>
                      </div>

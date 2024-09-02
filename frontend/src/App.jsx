@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSocket } from './redux/SocketSlice';
 import { setOnlineUsers } from './redux/ChatSlice';
 import { setLikeNotification } from './redux/RTNSlice';
+import ProtectedRout from './components/protectedRout';
 
 
 function App() {
@@ -57,23 +58,23 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element:<Mainlayout/>,
+      element: <ProtectedRout><Mainlayout/></ProtectedRout>,
       children:[
         {
           path: "/profile/:id",
-          element:<Profile/>
+          element: <ProtectedRout><Profile/></ProtectedRout>
         },
         {
           path: "/account/edit",
-          element:<EditProfile/>
+          element:<ProtectedRout><EditProfile/></ProtectedRout>
         },
         {
           path: "/chat",
-          element:<ChatPage/>
+          element:<ProtectedRout><ChatPage/></ProtectedRout>
         },
         {
           path: "/home",
-          element:<Home/>
+          element:<ProtectedRout><Home/></ProtectedRout>
         },
       ]
     },

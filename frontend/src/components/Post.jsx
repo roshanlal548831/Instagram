@@ -10,6 +10,7 @@ import axios from 'axios'
 import { setPost, setSelectedPost } from '@/redux/PostSlice'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Badge } from './ui/badge';
+import { Link } from 'react-router-dom';
 
 const Post = ({post}) => {
 
@@ -119,11 +120,15 @@ const commentHandler = async () => {
   <div className=' my-8 w-full max-w-sm mx-auto'>
       <div className=' flex items-center justify-between'>     
           <div className='items-center gap-2 flex'>
+            <Link to={`/profile/${user?._id}`}>
            <Avatar>
              <AvatarImage src={post.author.profilePicture} className=' rounded-3xl h-12 w-12'/>
              <AvatarFallback>CN</AvatarFallback>
           </Avatar>
+          </Link>
+          <Link to={`/profile/${user?._id}`}>
           <h1>{post.author?.username}</h1>
+          </Link>
          {user?._id === post.author?._id && <Badge variant="secondary">Author</Badge> } 
       </div>
       <Dialog>
