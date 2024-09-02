@@ -39,7 +39,7 @@ const Post = ({post}) => {
 const likeOrDislikeHanler = async () =>{
     try {
       const action = liked ? "dislike" : "like"
-      const res = await axios.get(`api/v1/post/${post._id}/${action}`,{withCredentials:true});
+      const res = await axios.get(`/api/v1/post/${post._id}/${action}`,{withCredentials:true});
          if(res.data.success){
           setLike(!liked)
           const updatedLike = liked ? postLike -1 : postLike +1
