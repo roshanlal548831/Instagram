@@ -81,8 +81,9 @@ useEffect(()=>{
                     </div>
                   <Messages selectedUser={selectedUser}/>
                     <div  className='flex items-center p-4 border-t border-t-gray-300 '>
+                    <form onSubmit={()=>sendMessageHandler(selectedUser?._id)}></form>  
                     <input type='text' value={textMessage} onChange={(e) => setTextMessage(e.target.value)} className='flex-1 h-10 p-4  mr-2 focus-visible:ring-transparent' placeholder='messages...'/>
-                    <Button onClick={()=>sendMessageHandler(selectedUser?._id)}>Send</Button>
+                    <Button type="submit">Send</Button>
                     </div>
              </section>
             ) : (
