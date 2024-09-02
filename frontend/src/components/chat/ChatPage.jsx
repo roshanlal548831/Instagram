@@ -80,12 +80,11 @@ useEffect(()=>{
                      </div>
                     </div>
                   <Messages selectedUser={selectedUser}/>
-                    <div  className='flex items-center p-4 border-t border-t-gray-300 '>
-                    <form onSubmit={()=>sendMessageHandler(selectedUser?._id)}>
+                    <form onSubmit={()=>sendMessageHandler(selectedUser?._id)} className='flex items-center p-4 border-t border-t-gray-300 '>
                     <input type='text' value={textMessage} onChange={(e) => setTextMessage(e.target.value)} className='flex-1 h-10 p-4  mr-2 focus-visible:ring-transparent' placeholder='messages...'/>
                     <Button type="submit">Send</Button>
                     </form>  
-                    </div>
+  
              </section>
             ) : (
             <div className='flex flex-col items-center justify-center mx-auto'>
