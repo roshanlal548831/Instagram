@@ -25,7 +25,6 @@ const EditProfile = () => {
 
   const fileChangehandler = (e) => {
     const file = e.target.files?.[0]
-    console.log("this is file ",file)
     if(file)setInput({...input,profilePicture:file});
   };
 
@@ -48,7 +47,6 @@ const EditProfile = () => {
             },
             withCredentials:true
           });
-          console.log("this res data ",res.data.user.profilePicture)
           if(res.data.success){
             const upDatedUserData = {
               ...user,

@@ -13,7 +13,7 @@ const useGetUserProfile = (userId) => {
                    dipatch(setUserProfile(res.data.user))
                 }
             } catch (error) {
-                console.log(error)
+              
             }
         }
         fetchUserProfile()

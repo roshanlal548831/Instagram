@@ -10,12 +10,12 @@ import CreatePost from './CreatePost';
 import { setPost, setSelectedPost } from '@/redux/PostSlice';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Button } from './ui/button';
+import { FaFacebookMessenger } from "react-icons/fa6"
 
 
 const LeftSidebar = () => {
      const navigate = useNavigate()
      const {likeNotification} = useSelector(store => store.realTimeNotification);
-     console.log("thisis ",likeNotification)
      const {user} = useSelector(store => store.auth);
      const dispatch = useDispatch()
     const[open,setOpen] = useState(false);
@@ -27,7 +27,6 @@ const LeftSidebar = () => {
             const res = await axios.get("/api/v1/user/logout");
             dispatch(setSelectedPost(null));
             dispatch(setPost([]));
-            console.log(res.data)
             if(res.data.success){
            dispatch(setAuthUser(null))
            navigate("/login");
@@ -56,7 +55,7 @@ const LeftSidebar = () => {
     {icon:<Home/>,text:"Home", },
     {icon:<Search/>,text:"Search", },
     {icon:<TrendingUp/>,text:"Explore", },
-    {icon:<MessageCircle/>,text:"Message", },
+    {icon:<FaFacebookMessenger className='h-6 w-6'/>,text:"Message", },
     {icon:<Heart/>,text:"Notification", },
     {icon:<PlusSquare/>,text:"Create", },
     {icon:(
@@ -76,7 +75,7 @@ const LeftSidebar = () => {
 
      <h1 className='my-8 pl-3 font-bold'>LOGO</h1>
       {
-          sidebarItems.map((item,i) => {
+          sidebarItems?.map((item,i) => {
               return(
                   <div onClick={() => sidebarHandler(item.text)} key={i} className='flex items-center relative gap-3 my-3 hover:bg-gray-100 cursor-pointer rounded-lg p-4'>
                    {item.icon}
@@ -92,7 +91,7 @@ const LeftSidebar = () => {
 
                                     {
                                         likeNotification.length === 0 ? (<p>No new Notification</p>) : (
-                                            likeNotification.map((notification)=>{
+                                            likeNotification?.map((notification)=>{
                                                 return(
                                                     <div key={notification?.userId} className='flex items-center gap-2'>
                                                           <Avatar>

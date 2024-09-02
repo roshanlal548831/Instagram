@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom';
 
 const Post = ({post}) => {
 
-console.log("this is post ",post)
   const[open,setOpen] = useState(false)
   const[text,setText] = useState("")
   
@@ -46,7 +45,7 @@ const likeOrDislikeHanler = async () =>{
           const updatedLike = liked ? postLike -1 : postLike +1
           setPostLike(updatedLike);
           //apne post ki update karunga
-          const updatedPostDate = posts.map(p => p._id === post._id ? {
+          const updatedPostDate = posts?.map(p => p._id === post._id ? {
             ...p,
             likes:liked ? p.likes.filter(id=> id === user._id): [...p.likes,user._id]
           }:p
@@ -55,7 +54,6 @@ const likeOrDislikeHanler = async () =>{
           toast.success(res.data.message);
          }
     } catch (error) {
-      console.log(error);
       
     }
 }
@@ -69,13 +67,12 @@ const commentHandler = async () => {
       withCredentials:true
     });
 
-    console.log(res)
 
     if(res.data.success){
       const updatedCommentData = [...comment, res.data.comment]
       setComment(updatedCommentData)
 
-    const updatedPostdate =  posts.map(p =>
+    const updatedPostdate =  posts?.map(p =>
        p._id === post._id ? {...p, comments:updatedCommentData } :  p
   );
 
@@ -85,7 +82,6 @@ const commentHandler = async () => {
       setText("")
     }
   } catch (error) {
-  console.log(error)
   }
 }
 
@@ -96,9 +92,7 @@ const commentHandler = async () => {
         dispatch(setPost(updatedPostData))
         toast.success(res.data.message)
 
-        console.log(res)
        } catch (error) {
-         console.log(error);
          toast.error(error.response.data.message)
          
        }
@@ -107,12 +101,10 @@ const commentHandler = async () => {
   const BookmarkHandler = async() => {
       try {
         const res = await axios.get(`/api/v1/post/${post?._id}/bookmark`,{withCredentials:true});
-        console.log("bookmart data => ",res.data)
         if(res.data.success){
           toast.success(res.data.message);
         }
       } catch (error) {
-        console.log("boomark errorr ",error)
       }
   }
   return (

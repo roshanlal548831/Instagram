@@ -16,7 +16,6 @@ const CommentDialog = ({open,setOpen}) => {
   const dispatch = useDispatch();
 
   const[comment,setComment] = useState([])
-  console.log(comment)
    const[text,setText] = useState("")
 
   useEffect(()=>{
@@ -44,13 +43,13 @@ const CommentDialog = ({open,setOpen}) => {
         withCredentials:true
       });
   
-      console.log(res)
+    
   
       if(res.data.success){
         const updatedCommentData = [...comment, res.data.comment]
         setComment(updatedCommentData)
   
-      const updatedPostdate =  posts.map(p =>
+      const updatedPostdate =  posts?.map(p =>
          p._id === selectedPost._id ? {...p, comments:updatedCommentData } :  p
     );
   
@@ -60,7 +59,7 @@ const CommentDialog = ({open,setOpen}) => {
         setText("")
       }
     } catch (error) {
-    console.log(error)
+  
     }
   }
   
@@ -110,7 +109,7 @@ const CommentDialog = ({open,setOpen}) => {
             <hr />
             <div className='flex-1 overflow-y-auto h-full p-4 '>
              {
-              comment.map((comment)=> <Comment comment={comment} />)
+              comment?.map((comment)=> <Comment comment={comment} />)
              }
             </div>
             <div className='p-4'>

@@ -45,7 +45,7 @@ const Signup = () => {
             username:"",
             password:"",
         })
-        navigate("/home")
+        navigate("/login")
         } 
         }
       
@@ -53,7 +53,9 @@ const Signup = () => {
     } catch (error) {
     // setLoading(true)
     toast.error(error.response.data.message)
-    }
+    }finally{
+        setLoading(false)
+       }
 
    } 
 

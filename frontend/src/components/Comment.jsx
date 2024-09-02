@@ -2,7 +2,7 @@ import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 
 const Comment = ({comment}) => {
-    console.log(comment)
+   
     
   return (
     <div className='my-2'>

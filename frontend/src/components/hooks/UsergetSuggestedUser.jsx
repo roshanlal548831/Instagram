@@ -13,7 +13,7 @@ const UsergetSuggestedUser = () => {
                    dipatch(setSuggestedUsers(res.data.users))
                 }
             } catch (error) {
-                console.log(error)
+              
             }
         }
         fetchSuggestedUser()

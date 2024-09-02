@@ -13,7 +13,7 @@ const useGetAllPost = () => {
                    dipatch(setPost(res.data.posts))
                 }
             } catch (error) {
-                console.log(error)
+               
             }
         }
         fetchAllPost()

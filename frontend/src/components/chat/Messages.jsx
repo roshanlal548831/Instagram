@@ -29,7 +29,7 @@ const {message} = useSelector(store => store.chat);
         </div>
         <div className=' flex flex-col gap-3'>
       { 
-    message && message.map((msg) => {
+    message && message?.map((msg) => {
            return(
             <div className={`flex ${msg.senderId === selectedUser?._id ? "justify-start":"justify-end"}`} >
                   <div className={`p-1 rounded-2xl scroll-smooth   max-w-xs break-words ${msg.senderId === selectedUser?._id ? "bg-gray-200": "bg-[#0084ff] text-white "}`}>

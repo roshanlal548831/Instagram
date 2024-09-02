@@ -25,12 +25,12 @@ export const register = async (req,res) => {
 
 
       const data =  await User({name,username,password:hashpassword});
-      await data.save()
+         await data.save()
 
-      const token = jwt.sign({ userId: User._id }, process.env.SECRET_KEY, { expiresIn: "1d" });
-
+    
+     
        if(data){
-           return res.cookie("token",token,{httpOnly:true,maxAge:1*24*60*1000}).json({
+           return res.status(200).json({
             message: "Account created success",
             success: true
            })
@@ -69,7 +69,7 @@ export const login = async(req,res) => {
                     return null
                 })
             )
-            const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: "1d" });
+            const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY,);
             const users = {
                 _id: user.id,
                 username: user.username,
@@ -83,7 +83,6 @@ export const login = async(req,res) => {
             }
              return await res.cookie("token",token,{
                 httpOnly: true,
-                 maxAge: 24 * 60 * 60 * 1000,
                 }).json({
             message: `welcome back ${user.username}`,
             users,

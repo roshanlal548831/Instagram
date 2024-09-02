@@ -44,7 +44,6 @@ const login = () => {
                 username:"",
                 password:"",
             })
-            console.log("user data",res.data.users)
             dispatch(setAuthUser(res.data.users))
             navigate("/home")
             } 
@@ -54,7 +53,7 @@ const login = () => {
     } catch (error) {
     // setLoading(true)
     // setLoading(true)
-    console.log(error)
+    // console.log(error)
     toast.error(error.response.data.message)
 
     }finally{
