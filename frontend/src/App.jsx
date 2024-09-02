@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSocket } from './redux/SocketSlice';
 import { setOnlineUsers } from './redux/ChatSlice';
 import { setLikeNotification } from './redux/RTNSlice';
-import ProtectedRout from './components/protectedRout';
+import ProtectedRout from './components/ProtectedRout';
 
 
 function App() {
