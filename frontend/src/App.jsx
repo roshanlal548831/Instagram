@@ -62,11 +62,11 @@ function App() {
       children:[
         {
           path: "/profile/:id",
-          element: <ProtectedRout><Profile/></ProtectedRout>
+          element:<Profile/>
         },
         {
           path: "/account/edit",
-          element:<ProtectedRout><EditProfile/></ProtectedRout>
+          element:<EditProfile/>
         },
         {
           path: "/chat",
