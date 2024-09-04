@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const SuggestedUsers = () => {
   const {suggestedUsers} = useSelector(store => store.auth) ;
   return (
-    <div className='my-10'>
+    <div className='my-10 w-96'>
       <div className='flex items-center justify-between text-sm' >
          <h1 className=' font-semibold text-gray-600'>Suggested for you</h1>
          <span className='font-medium cursor-pointer'>See All</span>
@@ -14,7 +14,7 @@ const SuggestedUsers = () => {
       {
         suggestedUsers?.map((user)=>{
           return(
-            <div key={user._id} className='flex items-center justify-between my-5'>
+            <div key={user._id} className='flex items-center justify-between my-5 w-96'>
               <div className='items-center gap-2 flex'>
                   <Link to={`/profile/${user._id}`}>
                   <Avatar>

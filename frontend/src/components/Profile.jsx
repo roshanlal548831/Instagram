@@ -6,6 +6,7 @@ import useGetUserProfile from './hooks/useGetUserProfile'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
 import { Heart, MessageCircle } from 'lucide-react'
+import axios from 'axios'
 
 const Profile = () => {
   const param = useParams();
@@ -24,7 +25,14 @@ const Profile = () => {
   }
  
  const displayedPost = activetab === "posts" ? userProfile?.posts : userProfile?.bookmarks;
-
+const onHandleFollow = async() => {
+  try {
+    const followUnfollow = await axios.get(`/api/v1/user/followorunfollow/${user?._id}`)
+    console.log("this is folloe ",followUnfollow)
+  } catch (error) {
+    
+  }
+}
   return (
     <div className='flex flex-col max-w-5xl ml-72 justify-center max-autho pl-10'>
       <div className='flex flex-col gap-20 p-8'>
@@ -51,11 +59,11 @@ const Profile = () => {
                 ): (
                   isFollowing ? (
                     <>
-                    <Button variant="secondary" className="h-8">UnFollow</Button>
+                    <Button onClick={onHandleFollow} variant="secondary" className="h-8">UnFollow</Button>
                     <Button variant="secondary" className=" h-8">Message</Button>
                     </> 
                   ):(  
-                    <Button  className="bg-[#4ab2f8] hover:bg-[#2d709c] h-8">Follow</Button> 
+                    <Button onClick={onHandleFollow}  className="bg-[#4ab2f8] hover:bg-[#2d709c] h-8">Follow</Button> 
                   )
                 ) 
               }
